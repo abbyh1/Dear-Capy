@@ -3,10 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dear-Capy</title>
+    <title>DearCapy</title>
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-    <h1> DearCapy</h1>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+   
+                </svg>
+            </div>
+            <h1>DearCapy</h1>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="quote-section">
+            <p class="quote-text" id="quoteText">You were ready the moment you had a desire.</p>
+            <button class="quote-button" id="quoteButton" aria-label="Get new quote">✨</button>
+        </div>
+
+        <div class="entry-section">
+            <textarea class="entry-area" id="entryArea" placeholder="Write your thoughts here..."></textarea>
+            <button class="new-entry-button" id="newEntryButton">New Entry</button>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
 </body>
 </html>
