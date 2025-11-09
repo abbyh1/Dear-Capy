@@ -10,25 +10,42 @@
     <header class="header">
         <div class="header-content">
             <div class="logo">
-                <svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
-   
-                </svg>
+                <img class="logo-image" id="logo-image" src="DearCapy (2).png" alt="DearCapy Logo">
             </div>
-            <h1>DearCapy</h1>
+            <a href="index.html"> <h1>DearCapy</h1></a>
+            <a href="About.html"><h2>About</h2></a>
         </div>
     </header>
 
-    <main class="main-content">
-        <div class="quote-section">
-            <p class="quote-text" id="quoteText">You were ready the moment you had a desire.</p>
-            <button class="quote-button" id="quoteButton" aria-label="Get new quote">✨</button>
-        </div>
+    <div class="falling-container">
+       
+        <div class="background-copy"></div>
+    </div>
 
-        <div class="entry-section">
-            <textarea class="entry-area" id="entryArea" placeholder="Write your thoughts here..."></textarea>
-            <button class="new-entry-button" id="newEntryButton">New Entry</button>
-        </div>
-    </main>
+    <main class="main-content">
+  <div class="quote-section">
+    <p class="quote-text" id="quoteText">You were ready the moment you had a desire.</p>
+    <button class="quote-button" id="quoteButton" aria-label="Get new quote">✨</button>
+  </div>
+
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">🌙</button>
+
+    
+
+</section>
+
+  <!-- Entry area + rating --> <div class="entry-section"> 
+    <textarea class="entry-area" id="entryArea" placeholder="Write your thoughts here..."></textarea> 
+    <div class="entry-side"> <div class="rating" aria-label="Rate your day"> 
+        <input type="radio" id="star5" name="rating" value="5"><label for="star5" title="5 stars">★</label> <input type="radio" id="star4" name="rating" value="4"><label for="star4" title="4 stars">★</label> 
+        <input type="radio" id="star3" name="rating" value="3"><label for="star3" title="3 stars">★</label> <input type="radio" id="star2" name="rating" value="2"><label for="star2" title="2 stars">★</label> <input type="radio" id="star1" name="rating" value="1"><label for="star1" title="1 star">★</label> </div> <button class="new-entry-button" id="newEntryButton" onclick="saveText()">New Entry</button> </div> </div>
+
+  <h2>Past Entries</h2>
+
+  <!-- Grid of cards -->
+  <div class="entries-grid" id="entriesList"></div>
+</main>
+
 
     <script src="script.js"></script>
 </body>

@@ -4,13 +4,154 @@
     box-sizing: border-box;
 }
 
+
 body {
-    background-color: #F5E6D3;
+    /*<div class="capy-bg"></div>*/
+    background-color: #F4E4BA;
     font-family: 'Georgia', 'Times New Roman', serif;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
 }
+
+body {
+  margin: 0;
+  overflow-x: hidden;
+  background-image: url("orange.png");
+  background-repeat: repeat;
+  background-size: 500px; /* scale the tiles */
+  animation: fall 100s linear infinite;
+}
+
+@keyframes fall {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 0 100%;
+  }
+}
+
+/*floating capys animation here*/
+.floating-capys{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 0;
+    background-color: #F4E4BA;
+}
+
+body > *:not(.floating-capys){
+    position:relative;
+    z-index: 1;
+}
+
+.capy{
+    position: absolute;
+    opacity: 0;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+    filter: drop-shadow(0 3px 6px rgba(0,0,0,0,2));
+    will-change: transform, opacity;
+}
+
+@keyframes floatDown{
+    0%{
+        transform:translateY(-120px) translateX(0) scale(0.9) rotate(0deg);
+        opacity: 0;
+    }
+    10%{
+        opacity: 0.8;
+    }
+    50%{
+        opacity: 1;
+        transform: translateY(50vh) translateX(40px) scale(1) rotate(180deg);
+    }
+    90%{
+        opacity: 0.8;
+    }
+    100%{
+        transform: translateY(110vh) translateX(100px) scale(0.95) rotate(360deg);
+        opacity:0
+    }
+}
+
+@keyframes floatDiagonalLeft{
+    0%{
+        transform:translateY(-100px) translateX(120px) scale(1.1) rotate(0deg);
+        opacity: 0;
+    }
+    10%{
+        opacity: 0.7;
+    }
+    50%{
+        opacity: 1;
+        transform: translateY(50vh) translateX(-60px) scale(1) rotate(-180deg);
+    }
+    90%{
+        opacity: 0.7;
+    }
+    100%{
+        transform: translateY(110vh) translateX(-160px) scale(1.05) rotate(-360deg);
+        opacity:0
+    }
+}
+
+@keyframes floatUpRight{
+    0%{
+        transform:translateY(110vh) translateX(-80px) scale(1) rotate(0deg);
+        opacity: 0;
+    }
+    10%{
+        opacity: 0.8;
+    }
+    50%{
+        opacity: 1;
+        transform: translateY(40vh) translateX(60px) scale(0.95) rotate(180deg);
+    }
+    90%{
+        opacity: 0.7;
+    }
+    100%{
+        transform: translateY(-120px) translateX(150px) scale(1) rotate(360deg);
+        opacity:0
+    }
+}
+
+.capy:nth-child(1){
+    left: 5%;
+    width: 70px;
+    animation: floatDown 20s ease-in-out 0s infinite;
+}
+.capy:nth-child(2){
+    left: 25%;
+    width: 90px;
+    animation: floatDown 26s ease-in-out 3s infinite;
+}
+.capy:nth-child(3){
+    left: 45%;
+    width: 100px;
+    animation: floatDown 30s ease-in-out 1s infinite;
+}
+.capy:nth-child(4){
+    left: 65%;
+    width: 85px;
+    animation: floatDown 24s ease-in-out 5s infinite;
+}
+.capy:nth-child(5){
+    left: 85%;
+    width: 75px;
+    animation: floatDown 28s ease-in-out 7s infinite;
+}
+.capy:nth-child(6){
+    left: 50%;
+    width: 110px;
+    animation: floatDown 32s ease-in-out 9s infinite;
+}
+
 
 /* Header */
 .header {
@@ -18,6 +159,22 @@ body {
     width: 100%;
     padding: 20px 40px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.logo-image {
+    width: 90px;
+    height: 90px;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+    animation: rotateContinuously 3s linear infinite;
+}
+
+@keyframes rotateContinuously {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 .header-content {
@@ -46,7 +203,9 @@ body {
     text-align: left;
     font-family: 'Georgia', serif;
 }
-
+.h2{
+    color:white
+}
 /* Main Content */
 .main-content {
     flex: 1;
@@ -55,7 +214,13 @@ body {
     margin: 40px auto;
     padding: 0 40px;
 }
-
+a {
+  text-decoration: none;     /* removes underline */
+  color: inherit;            /* makes it take the surrounding text color */
+}
+.falling-container{
+    opacity: 0.5;
+}
 /* Quote Section */
 .quote-section {
     display: flex;
@@ -72,7 +237,7 @@ body {
     font-style: italic;
     text-align: center;
     max-width: 600px;
-    margin: 0;
+    margin: 0 auto;
     transition: opacity 0.3s ease;
 }
 
@@ -192,4 +357,198 @@ body {
         flex-direction: column;
         gap: 10px;
     }
+}
+
+/* Past Entries*/
+h2 {
+    background-color: #AF6A28;
+    text-align: center;
+    color: white;
+    margin-top: 30px;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+
+/* Past Entry Styles */
+/* Right-side column next to textarea */
+.entry-side{
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+}
+
+/* Star rating (accessible radios) */
+.rating{
+  display:flex;
+  flex-direction: row-reverse; /* so hovering left fills to the left */
+  gap:6px;
+  align-items:center;
+  justify-content:flex-start;
+}
+.rating input{
+  display:none;
+}
+.rating label{
+  cursor:pointer;
+  font-size: 1.6rem;
+  line-height: 1;
+  color:#d6c5a4;               /* inactive star */
+  transition: transform .1s ease, color .15s ease;
+}
+.rating label:hover,
+.rating label:hover ~ label{
+  color:#FFD700;               /* hover fill */
+  transform: translateY(-1px);
+}
+.rating input:checked ~ label{
+  color:#FFD700;               /* selected fill */
+}
+
+/* Past Entries grid (3 white squares like your Figma) */
+.entries-grid{
+  margin-top: 18px;
+  display:grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 28px;
+}
+.entry-card{
+  background: #fff;
+  border: 1px solid #edd9b8;
+  border-radius: 12px;
+  box-shadow: 0 3px 10px rgba(0,0,0,.06);
+  padding: 14px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+/*  “thumbnail” area on top (like the square in your mock) */
+.entry-thumb img{
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+/* text snippet */
+.entry-text{
+  color:#3b2f2a;
+  font-size: 0.98rem;
+  line-height: 1.45;
+  white-space: pre-wrap;
+  max-height: 4.2em;
+  overflow: hidden;
+}
+
+/* meta (date + mood) */
+.entry-meta{
+  margin-top: 6px;
+  font-family: 'Georgia', serif;
+  color:#564534;
+  font-size: 0.95rem;
+}
+.meta-row{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.meta-label{
+  font-weight:bold;
+}
+.meta-stars{
+  color:#FFD700;
+  letter-spacing: 1px;
+  font-size: 1.1rem;
+}
+
+/* Responsive tweak */
+@media (max-width: 768px){
+  .entry-section{ flex-direction:column; }
+  .rating{ justify-content:flex-start; }
+}
+/* delete (garbage) button in bottom-right corner of each card */
+.delete-btn {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #af6a28;
+  font-size: 1.2rem;
+  opacity: 0.7;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.delete-btn:hover {
+  transform: scale(1.1);
+  opacity: 1;
+  color: #8b5528;
+}
+
+/* make sure cards have relative positioning so button anchors inside */
+.entry-card {
+  position: relative;
+}
+
+h3 {
+    margin: 20px;
+    color: black;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+
+.journal-canvas{
+  position: relative;
+  width: min(92vw, 820px);
+  aspect-ratio: 4 / 3;           /* set to your notebook image’s aspect */
+  margin: 0 auto 24px;
+}
+.notebook-bg{
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  user-select: none;
+  pointer-events: none;          /* clicks go to the textarea */
+  filter: drop-shadow(0 6px 14px rgba(0,0,0,.15));
+  border-radius: 12px;
+}
+
+/* This is your real typing surface */
+.entry-area.on-notebook{
+  position: absolute;
+  /* Tweak these 4 numbers so the text sits exactly inside the white paper area */
+  top: 18%;
+  left: 12.5%;
+  width: 75%;
+  height: 57%;
+
+  background: transparent;       /* see the notebook image */
+  border: none;
+  outline: none;
+  resize: none;                  /* optional, removes corner handle */
+  overflow: auto;
+
+  padding: 20px;
+  font-family: 'Georgia', serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #333;
+
+  /* optional ruled lines effect */
+  background-image: linear-gradient(transparent 23px, rgba(0,0,0,.06) 24px);
+  background-size: 100% 24px;
+}
+
+.new-entry-button.on-notebook-btn{
+  position: absolute;
+  right: 12.5%;
+  bottom: 12%;
+  min-width: 120px;
 }

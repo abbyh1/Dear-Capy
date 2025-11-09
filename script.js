@@ -74,3 +74,127 @@ window.addEventListener('DOMContentLoaded', function() {
     document.getElementById('quoteText').textContent = quotes[currentQuoteIndex];
 });
 
+// Logo rotation is handled by CSS animation
+// The image will continuously rotate automatically
+
+
+
+// --- storage key
+const ENTRIES_KEY = 'dearcapy.entries.v1';
+
+// --- helpers
+function loadEntries() {
+  try { return JSON.parse(localStorage.getItem(ENTRIES_KEY)) || []; }
+  catch { return []; }
+}
+function saveEntries(arr) {
+  localStorage.setItem(ENTRIES_KEY, JSON.stringify(arr));
+}
+function getSelectedRating() {
+  const checked = document.querySelector('input[name="rating"]:checked');
+  return checked ? Number(checked.value) : 0;
+}
+function clearRating() {
+  const checked = document.querySelector('input[name="rating"]:checked');
+  if (checked) checked.checked = false;
+}
+function stars(n) {
+  const full = '★'.repeat(n);
+  const empty = '☆'.repeat(5 - n);
+  return full + empty;
+}
+
+// --- render past entries
+function renderEntries() {
+  const list = document.getElementById('entriesList');
+  const entries = loadEntries();
+  list.innerHTML = '';
+
+
+  entries.forEach(e => {
+    const card = document.createElement('div');
+    card.className = 'entry-card';
+
+
+    const thumb = document.createElement('div');
+    thumb.className = 'entry-thumb';
+    thumb.innerHTML = `<img src="${e.image}" alt="Entry image" />`;
+
+
+    const text = document.createElement('div');
+    text.className = 'entry-text';
+    text.textContent = e.text;
+
+
+    const meta = document.createElement('div');
+    meta.className = 'entry-meta';
+
+
+    const dateRow = document.createElement('div');
+    dateRow.className = 'meta-row';
+    dateRow.innerHTML = `<span class="meta-label">Date:</span> ${new Date(e.date).toLocaleDateString()}`;
+
+
+    const moodRow = document.createElement('div');
+    moodRow.className = 'meta-row';
+    moodRow.innerHTML = `<span class="meta-label">Mood:</span> <span class="meta-stars">${stars(e.rating || 0)}</span>`;
+
+
+
+    meta.appendChild(dateRow);
+    meta.appendChild(moodRow);
+
+
+    card.appendChild(thumb);
+    card.appendChild(text);
+    card.appendChild(meta);
+    list.appendChild(card);
+  });
+}
+
+
+
+const images = [
+    "Dearcapy (2).png",
+    "capy.png",
+    "capy (1).png",
+    "capy (5).png",
+    "capy (6).png"
+]
+
+let currentImageIndex = 0;
+function getRandomImage() {
+    let imageIndex;
+    // Ensure we don't show the same quote twice in a row
+    do {
+        imageIndex = Math.floor(Math.random() * images.length);
+    } while (imageIndex === currentImageIndex && images.length > 1);
+  
+    currentImageIndex = imageIndex;
+    return images[currentImageIndex];
+}
+
+// --- save button
+window.saveText = function saveText() {
+  const box = document.getElementById('entryArea');
+  const text = box.value.trim();
+  const rating = getSelectedRating();
+
+  if (!text) return; // ignore empty
+
+  const entries = loadEntries();
+  entries.unshift({
+    text,
+    rating,
+    date: new Date().toISOString(),
+    image: getRandomImage()
+  });
+  saveEntries(entries);
+
+  box.value = '';
+  clearRating();
+  renderEntries();
+};
+
+// initial render
+renderEntries();
