@@ -17,10 +17,20 @@ body {
 body {
   margin: 0;
   overflow-x: hidden;
-  background-image: url("orange.png");
+  background-image: url("orange2.png");
   background-repeat: repeat;
-  background-size: 500px; /* scale the tiles */
+  background-size: 500px;
   animation: fall 100s linear infinite;
+  position: relative;
+}
+
+/* translucent overlay on top of background */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-color: rgba(244, 228, 186, 0.7); /* beige tint @70% */
+  z-index: -1; /* stays behind page content */
 }
 
 @keyframes fall {
@@ -160,6 +170,10 @@ body > *:not(.floating-capys){
     padding: 20px 40px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+.h3{
+    margin-left: 50px;
+    margin-right:50px;
+}
 
 .logo-image {
     width: 90px;
@@ -232,7 +246,7 @@ a {
 }
 
 .quote-text {
-    color: #8B7355;
+    color: #000000;
     font-size: 1.2rem;
     font-style: italic;
     text-align: center;
@@ -551,4 +565,46 @@ h3 {
   right: 12.5%;
   bottom: 12%;
   min-width: 120px;
+}
+
+/* make cards positionable so the button anchors inside */
+.entry-card { position: relative; }
+
+/* trash can button */
+.delete-btn {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  width: 34px;
+  height: 34px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  opacity: .8;
+  transition: transform .15s ease, opacity .15s ease;
+}
+.delete-btn:hover { transform: scale(1.08); opacity: 1; }
+.delete-btn svg { width: 100%; height: 100%; fill: #AF6A28; }
+[data-theme="dark"] .delete-btn svg { fill: #D29A52; }
+
+/* tiny fade-out when deleting */
+.entry-card.removing {
+  opacity: 0;
+  transform: scale(.98);
+  transition: opacity .18s ease, transform .18s ease;
+}
+
+.capy-about{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+    margin-bottom: 40px;
+}
+.about-text {
+  max-width: 700px;        /* limit line length */
+  margin: 20px auto;       /* centers horizontally */
+  line-height: 1.8;
+  text-align: center;      /* optional: center text */
+  color: #000000;          /* match your palette */
 }

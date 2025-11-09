@@ -104,52 +104,74 @@ function stars(n) {
   return full + empty;
 }
 
-// --- render past entries
 function renderEntries() {
   const list = document.getElementById('entriesList');
   const entries = loadEntries();
   list.innerHTML = '';
 
-
-  entries.forEach(e => {
+  entries.forEach((e, index) => {
     const card = document.createElement('div');
     card.className = 'entry-card';
 
-
-    const thumb = document.createElement('div');
+    // 🖼 keep the thumbnail/picture (not deleted from disk, just displayed)
+    // If you have a real image per entry, set e.thumbSrc; otherwise keep the placeholder.
+    const thumb = document.createElement('img');
     thumb.className = 'entry-thumb';
-    thumb.innerHTML = `<img src="${e.image}" alt="Entry image" />`;
-
+    thumb.alt = '';
+    thumb.src = e.thumbSrc || 'thumb-placeholder.png'; // <-- your picture here
+    // If you used a styled <div> before, you can keep that instead of <img>.
 
     const text = document.createElement('div');
     text.className = 'entry-text';
     text.textContent = e.text;
 
-
     const meta = document.createElement('div');
     meta.className = 'entry-meta';
-
 
     const dateRow = document.createElement('div');
     dateRow.className = 'meta-row';
     dateRow.innerHTML = `<span class="meta-label">Date:</span> ${new Date(e.date).toLocaleDateString()}`;
 
-
     const moodRow = document.createElement('div');
     moodRow.className = 'meta-row';
     moodRow.innerHTML = `<span class="meta-label">Mood:</span> <span class="meta-stars">${stars(e.rating || 0)}</span>`;
 
-
-
     meta.appendChild(dateRow);
     meta.appendChild(moodRow);
 
+    // 🗑 delete button
+    const del = document.createElement('button');
+    del.className = 'delete-btn';
+    del.title = 'Delete entry';
+    del.setAttribute('aria-label', 'Delete entry');
+    del.innerHTML = `
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M9 3h6a1 1 0 0 1 1 1v1h4v2h-1l-1 13a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2L4 7H3V5h4V4a1 1 0 0 1 1-1zm2 0v1h2V3h-2zM7 7l1 12h8l1-12H7z"/>
+      </svg>
+    `;
+    del.addEventListener('click', () => deleteEntry(index, card));
 
+    // assemble card
     card.appendChild(thumb);
     card.appendChild(text);
     card.appendChild(meta);
+    card.appendChild(del);
     list.appendChild(card);
   });
+}
+
+function deleteEntry(index, cardEl) {
+  const entries = loadEntries();
+  if (!entries[index]) return;
+  if (!confirm('Delete this journal entry?')) return;
+
+  // small fade-out before removing
+  cardEl.classList.add('removing');
+  setTimeout(() => {
+    entries.splice(index, 1);
+    saveEntries(entries);
+    renderEntries();
+  }, 180);
 }
 
 
